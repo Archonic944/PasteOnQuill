@@ -44,5 +44,23 @@ window.addEventListener("keydown", function(event) {
         }
     }
 }, true);
+
+window.addEventListener("keydown", function(event) {
+    //if alt + number
+    if (event.code.startsWith("Digit") && event.altKey){
+        //get sentence fragments
+        let fragElements = document.querySelectorAll(".sentence-fragments > p");
+        if(fragElements.length === 0) return;
+        //get the number
+        let num = parseInt(event.code.slice(-1));
+        if(num > 4) return;
+        event.preventDefault();
+        //if the number is out of range, return
+        if(num < 1 || num > fragElements.length) return;
+        //insert sentence fragment
+        let frag = fragElements[num - 1].innerText;
+        document.execCommand('insertText', false, frag);
+    }
+}, true)
 })
 
