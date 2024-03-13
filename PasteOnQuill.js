@@ -57,10 +57,17 @@ window.addEventListener("keydown", function(event) {
         event.preventDefault();
         //if the number is out of range, return
         if(num < 1 || num > fragElements.length) return;
-        //insert sentence fragment
+        //  get the fragment
         let frag = fragElements[num - 1].innerText;
+        //get content of focused text box
+        let content = document.activeElement.innerText;
+        if(content.length > 0){
+            //change to lowercase
+            frag = frag.charAt(0).toLowerCase() + frag.slice(1);
+        }
+        //remove period
+        if(frag.charAt(frag.length - 1) == '.') frag = frag.slice(0, -1);
         document.execCommand('insertText', false, frag);
     }
 }, true)
 })
-
