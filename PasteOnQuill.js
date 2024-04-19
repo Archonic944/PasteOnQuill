@@ -61,13 +61,23 @@ window.addEventListener("keydown", function(event) {
         let frag = fragElements[num - 1].innerText;
         //get content of focused text box
         let content = document.activeElement.innerText;
+        //remove the starting part of the fragment that it shares with the start of the content
+        //need to iterate in case the text box contains additional content
+        //this is good for sentence combination tasks
+        let sub = 0;
+        while(content.startsWith(frag.slice(0, sub + 1))){
+            sub++;
+            //debug
+            console.log("sub: " + sub);
+            console.log("does " + content + " start with " + frag.slice(0, sub + 1) + "? " + content.startsWith(frag.slice(0, sub + 1)));
+        } 
         if(content.length > 0){
             //change to lowercase
             frag = frag.charAt(0).toLowerCase() + frag.slice(1);
         }
         //remove period
         if(frag.charAt(frag.length - 1) == '.') frag = frag.slice(0, -1);
-        document.execCommand('insertText', false, frag);
+        document.execCommand('insertText', false, frag.slice(sub));
     }
 }, true)
 })
