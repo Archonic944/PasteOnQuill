@@ -51,6 +51,11 @@ window.addEventListener("keydown", function(event) {
         //get sentence fragments
         let fragElements = document.querySelectorAll(".sentence-fragments > p");
         if(fragElements.length === 0) return;
+        //also split based on line breaks
+        let frags = [];
+        for(let i = 0; i < fragElements.length; i++){
+            frags = frags.concat(fragElements[i].innerHTML.split("<br>"));
+        }
         //get the number
         let num = parseInt(event.code.slice(-1));
         if(num > 4) return;
@@ -58,7 +63,7 @@ window.addEventListener("keydown", function(event) {
         //if the number is out of range, return
         if(num < 1 || num > fragElements.length) return;
         //  get the fragment
-        let frag = fragElements[num - 1].innerText;
+        let frag = frags[num - 1];
         //get content of focused text box
         let content = document.activeElement.innerText;
         //remove the starting part of the fragment that it shares with the start of the content
@@ -67,10 +72,7 @@ window.addEventListener("keydown", function(event) {
         let sub = 0;
         while(content.startsWith(frag.slice(0, sub + 1))){
             sub++;
-            //debug
-            console.log("sub: " + sub);
-            console.log("does " + content + " start with " + frag.slice(0, sub + 1) + "? " + content.startsWith(frag.slice(0, sub + 1)));
-        } 
+        }
         if(content.length > 0){
             //change to lowercase
             frag = frag.charAt(0).toLowerCase() + frag.slice(1);
