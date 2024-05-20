@@ -54,7 +54,7 @@ window.addEventListener("keydown", function(event) {
         //also split based on line breaks
         let frags = [];
         for(let i = 0; i < fragElements.length; i++){
-            frags = frags.concat(fragElements[i].innerHTML.split("<br>"));
+            frags = frags.concat(fragElements[i].innerHTML.split("<br>").map(x => x.replace("&nbsp;", "")));
         }
         //get the number
         let num = parseInt(event.code.slice(-1));
